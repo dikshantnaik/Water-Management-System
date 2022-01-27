@@ -8,13 +8,9 @@ $dbname = "water-managment";
 // Create connection
 $con = new mysqli($servername, $username, $password, $dbname);
 // Check connection
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
+if ($con->connect_error) {
+  die("Connection failed: " . $con->connect_error);
 }
 
-function alert_box($msg)
-{
-  echo "<script>alert(\"".$msg."\")</script>";
 
-}
 ?>

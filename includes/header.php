@@ -13,7 +13,7 @@
 
         <!-- Bootstrap Core CSS -->
         <link  rel="stylesheet" href="assets/css/bootstrap.min.css"/>
-    <link rel="icon" href="https://img.icons8.com/doodle/50/000000/home--v1.png" type="image/x-icon">
+    <!-- <link rel="icon" href="https://img.icons8.com/doodle/50/000000/home--v1.png" type="image/x-icon"> -->
         <!-- MetisMenu CSS -->
         <link href="assets/js/metisMenu/metisMenu.min.css" rel="stylesheet">
 
