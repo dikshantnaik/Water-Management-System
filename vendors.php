@@ -1,6 +1,7 @@
 <?php
 session_start();
 include 'connection.php';
+include 'utils.php';
 // require_once 'config/config.php';
 // error_reporting(E_ALL);
 // ini_set('display_errors', 'On');
@@ -26,12 +27,16 @@ try {
 } catch (Exception $th) {
     echo $th;
 }
+if(isset($_SESSION['success'])){
+    Success($_SESSION['success']);
+    unset($_SESSION['success']);
+}
+?>
+<?php 
+
+include('includes/header.php'); 
 
 ?>
-
-
-</script>
-<?php include_once('includes/header.php'); ?>
 <!-- Main container -->
 <div id="page-wrapper">
     <div class="row">
@@ -57,7 +62,15 @@ try {
         <?php if(isset($_GET['search'])){ ?>
         <a class="btn btn-primary" href="vendors.php">Back</a>
         <?php } ?>
-        <a href="add_vendor.php" class="btn btn-success" style="float: right;">Add Vendors</a>
+        <a href="add_vendor.php" class="btn btn-success" style="float: right;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus"
+                viewBox="0 0 16 16">
+                <path
+                    d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z">
+                </path>
+            </svg>
+            <h4>Add Vendors</h4>
+        </a>
     </div>
     <hr>
     <!-- //Filters -->
@@ -85,10 +98,10 @@ try {
                 <td style="text-align:center"><?php echo $vendor["vendor_price"]?></td>
                 <td>
                     <form action="edit_vendor">
-                        <a class="btn btn-primary" type="submit" name="id"
+                        <a class="btn btn-primary" type=" submit" name="id"
                             href="edit_vendor.php?id=<?php print_r($vendor["id"]) ?> ">Edit</a>
                         <a class="btn btn-danger" type="submit" name="id"
-                            href="util.php?delete_vendor=true&id=<?php print_r($vendor["id"]) ?> ">Delete</a>
+                            href="utils.php?delete_vendor=true&id=<?php print_r($vendor["id"]) ?> ">Delete</a>
                     </form>
                 </td>
 

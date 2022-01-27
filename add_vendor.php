@@ -1,7 +1,7 @@
 <?php
- 
- include('connection.php');
-include('includes/utils.php');
+session_start();
+include('connection.php');
+include('utils.php');
  if(isset($_GET['add_vendor'])){
     
     try{    
@@ -13,7 +13,8 @@ include('includes/utils.php');
         $stmt->execute();
         // alert_box("Vendors Data Added");
         // header('Location:vendors.php');
-       Success("Data Added");
+        $_SESSION['success'] = "Added Success";
+		header('Location:vendors.php');
         
     }
     catch(mysqli_sql_exception $err){
@@ -30,6 +31,10 @@ include('includes/utils.php');
     
 }
 include_once('includes/header.php'); 
+if(isset($_SESSION['success'])){
+    Success($_SESSION['success']);
+    unset($_SESSION['success']);
+}
 ?>
 
 

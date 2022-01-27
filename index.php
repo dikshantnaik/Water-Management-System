@@ -4,6 +4,13 @@ session_start();
 // require_once 'includes/auth_validate.php';
 
 include_once('includes/header.php');
+// include 'utils.php';
+// include_once('utils.php');
+function getVendorCount() {
+	$sql = "SELECT COUNT(*) as Count FROM vendor";
+	$vendors = $con->query($sql);
+	return 10;
+}
 ?>
 <div id="page-wrapper">
     <div class="row">
@@ -22,7 +29,9 @@ include_once('includes/header.php');
                             <i class="fa fa-user fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo 10; ?></div>
+                            <div class="huge"><?php 
+                            echo 10;
+                            ?></div>
                             <div>Vendors</div>
                         </div>
                     </div>
@@ -58,7 +67,7 @@ include_once('includes/header.php');
                 </a>
             </div>
         </div>
-         <div class="col-lg-3 col-md-6">
+        <div class="col-lg-3 col-md-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -81,10 +90,10 @@ include_once('includes/header.php');
             </div>
         </div>
         <div class="col-lg-3 col-md-6">
-        
+
         </div>
         <div class="col-lg-3 col-md-6">
-            
+
         </div>
     </div>
     <!-- /.row -->

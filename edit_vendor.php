@@ -1,5 +1,5 @@
 <?php
- 
+ session_start();
     include('connection.php');
     include('includes/utils.php');
 if(isset($_GET['edit_vendor'])){
@@ -15,7 +15,8 @@ if(isset($_GET['edit_vendor'])){
         
         // alert_box("Vendors Data Added");
         // header('Location:vendors.php');
-       Success("Data Added");
+       $_SESSION['success'] = "Edited Success";
+		header('Location:vendors.php');
         
     }
     catch(mysqli_sql_exception $err){
@@ -32,7 +33,12 @@ if(isset($_GET['edit_vendor'])){
     
     $sql = "SELECT* from vendor WHERE id = ".$_GET['id'];
     $result = $con->query($sql);
+    
 include_once('includes/header.php'); 
+if(isset($_SESSION['success'])){
+    Success($_SESSION['success']);
+    unset($_SESSION['success']);
+}
 ?>
 
 
