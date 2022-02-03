@@ -1,12 +1,9 @@
 <?php
 session_start();
-// require_once './config/config.php';
-// require_once 'includes/auth_validate.php';
+
 include 'includes/flash_messages.php';
 include_once('includes/header.php');
 include 'utils.php';
-// include 'utils.php';
-// include_once('utils.php');   
 ?>
 <div id="page-wrapper">
     <?php include 'includes/flash_messages.php'?>
