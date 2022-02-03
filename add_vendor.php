@@ -5,15 +5,15 @@ include('utils.php');
  if(isset($_GET['add_vendor'])){
     
     try{    
-        $sql = "INSERT INTO vendor VALUES (NULL,?,?,?,?,?)";
+        $sql = "INSERT INTO vendor VALUES (NULL,?,?,?,?,?,?)";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("sssss", $_GET['vendor_name'], $_GET['vendor_phone'],
+        $stmt->bind_param("ssssss", $_GET['vendor_name'], $_GET['vendor_phone'],$_GET['vendor_category'],
                                    $_GET['vendor_product'],
                                    $_GET['vendor_quantity'],$_GET['vendor_price']);
         $stmt->execute();
         // alert_box("Vendors Data Added");
         // header('Location:vendors.php');
-        $_SESSION['success'] = "Added Success";
+       $_SESSION['success'] = "Added Success";
 		header('Location:vendors.php');
         
     }
@@ -31,14 +31,13 @@ include('utils.php');
     
 }
 include_once('includes/header.php'); 
-if(isset($_SESSION['success'])){
-    Success($_SESSION['success']);
-    unset($_SESSION['success']);
-}
+
 ?>
 
 
+<style>
 
+</style>
 <section id="page-wrapper">
     <div class="container">
         <h2>Add Vendor Details </h2>
@@ -57,6 +56,22 @@ if(isset($_SESSION['success'])){
                     <input style="width:40%" type="number" class="form-control" placeholder="Contact"
                         name="vendor_phone">
                 </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="email">Product Catgory</label>
+                    <div class="col-sm-10">
+                        <select style="width:40%" type="text" aria-label="Default select example" class="form-control"
+                            placeholder="Vendor Name" name="vendor_category">
+
+                            <option value="Water Bottle">Water Bottle</option>
+                            <option value="Water Jar">Water Jar</option>
+                            <option value="Water Tank">Water Tank</option>
+                            <option value="Soething">Somehting</option>
+                        </select>
+                    </div>
+                </div>
+
             </div>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="pwd">Product :</label>

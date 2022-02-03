@@ -1,18 +1,8 @@
 <?php
 session_start();
+
 include 'connection.php';
 include 'utils.php';
-// require_once 'config/config.php';
-// error_reporting(E_ALL);
-// ini_set('display_errors', 'On');
-// define('BASE_PATH', dirname(dirname(__FILE__)));
-// define('APP_FOLDER', 'simpleadmin');
-// define('CURRENT_PAGE', basename($_SERVER['REQUEST_URI']));
-// require_once 'includes/auth_validate.php';
-
-// //require_once BASE_PATH . '/includes/auth_validate.php';
-// include "../vendor/autoload.php";
-// require_once '../vendor/stefangabos/zebra_pagination/Zebra_Pagination.php';
 
 if(isset($_GET['search'])){
 $sql = "Select * from vendor 
@@ -27,16 +17,10 @@ try {
 } catch (Exception $th) {
     echo $th;
 }
-if(isset($_SESSION['success'])){
-    Success($_SESSION['success']);
-    unset($_SESSION['success']);
-}
-?>
-<?php 
 
-include('includes/header.php'); 
-
+include('includes/header.php');
 ?>
+
 <!-- Main container -->
 <div id="page-wrapper">
     <div class="row">
@@ -47,7 +31,7 @@ include('includes/header.php');
         </div>
 
     </div>
-
+    <?php include 'includes/flash_messages.php'?>
 
     <!-- Filters -->
     <div class="well text-center filter-form ce">
@@ -76,15 +60,16 @@ include('includes/header.php');
     <!-- //Filters -->
 
     <!-- Table -->
-    <table class="table table-striped table-bordered table-condensed">
+    <table style="text-align:center" class="table table-striped table-bordered table-condensed">
         <thead>
-            <tr>
-                <th width="20%">Vendor Name</th>
-                <th width="20%">Contact no</th>
-                <th width="20%">Product</th>
-                <th width="10%">Quantity</th>
-                <th width="10%">Price</th>
-                <th width="15%">Actions</th>
+            <tr style="text-align:center">
+                <th style="text-align:center" width="15%">Vendor Name</th>
+                <th style="text-align:center" width="15%">Contact no</th>
+                <th style="text-align:center" width="15%">Category</th>
+                <th style="text-align:center" width="15%">Product</th>
+                <th style="text-align:center" width="10%">Quantity</th>
+                <th style="text-align:center" width="10%">Price</th>
+                <th style="text-align:center" width="15%">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -93,6 +78,7 @@ include('includes/header.php');
                 <td style="text-align:center"><?php echo $vendor["vendor_name"]?></td>
 
                 <td style="text-align:center"><?php echo $vendor["vendor_phone"]?></td>
+                <td style="text-align:center"><?php echo $vendor["vendor_category"]?></td>
                 <td style="text-align:center"> <?php echo $vendor["vendor_product"]?></td>
                 <td style="text-align:center"><?php echo $vendor["vendor_quantity"]?></td>
                 <td style="text-align:center"><?php echo $vendor["vendor_price"]?></td>
@@ -126,4 +112,4 @@ include('includes/header.php');
 <!-- //Main container -->
 
 
-<?php include '/includes/footer.php'; ?>
+<?php include 'includes/footer.php'; ?>

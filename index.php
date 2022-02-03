@@ -2,23 +2,21 @@
 session_start();
 // require_once './config/config.php';
 // require_once 'includes/auth_validate.php';
-
+include 'includes/flash_messages.php';
 include_once('includes/header.php');
+include 'utils.php';
 // include 'utils.php';
-// include_once('utils.php');
-function getVendorCount() {
-	$sql = "SELECT COUNT(*) as Count FROM vendor";
-	$vendors = $con->query($sql);
-	return 10;
-}
+// include_once('utils.php');   
 ?>
 <div id="page-wrapper">
+    <?php include 'includes/flash_messages.php'?>
     <div class="row">
         <div class="col-lg-12">
             <h1 class="page-header">Dashboard</h1>
         </div>
         <!-- /.col-lg-12 -->
     </div>
+
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-3 col-md-6">
@@ -30,7 +28,7 @@ function getVendorCount() {
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge"><?php 
-                            echo 10;
+                            echo getVendorCount();
                             ?></div>
                             <div>Vendors</div>
                         </div>
