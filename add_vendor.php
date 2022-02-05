@@ -34,9 +34,10 @@ include_once('includes/header.php');
 
 ?>
 
-
 <style>
-
+.form-group {
+    padding-bottom: 2%;
+}
 </style>
 <section id="page-wrapper">
     <div class="container">

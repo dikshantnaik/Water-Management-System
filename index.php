@@ -31,7 +31,7 @@ include 'utils.php';
                         </div>
                     </div>
                 </div>
-                <a href="vendors.php">
+                <a href="vendors/vendors.php">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

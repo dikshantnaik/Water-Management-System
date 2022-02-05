@@ -90,5 +90,11 @@ function Login(string $username1,string $password1){
 		$_SESSION['success'] = "Deleted Sucess";
 		header('Location:vendors.php');
 	}
-
+  if(isset($_GET['delete_customer'])){
+		$sql = "DELETE FROM customer WHERE customer_id= " .$_GET['id'];
+		$con->query($sql);
+		$con->close;
+		$_SESSION['success'] = "Deleted Sucess";
+		header('Location:customer.php');
+	}
 ?>
