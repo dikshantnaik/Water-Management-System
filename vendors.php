@@ -83,12 +83,18 @@ include('includes/header.php');
                 <td style="text-align:center"><?php echo $vendor["vendor_quantity"]?></td>
                 <td style="text-align:center"><?php echo $vendor["vendor_price"]?></td>
                 <td>
-                    <form action="edit_vendor">
-                        <a class="btn btn-primary" type=" submit" name="id"
-                            href="edit_vendor.php?id=<?php print_r($vendor["id"]) ?> ">Edit</a>
-                        <a class="btn btn-danger" type="submit" name="id"
-                            href="utils.php?delete_vendor=true&id=<?php print_r($vendor["id"]) ?> ">Delete</a>
-                    </form>
+
+
+                    <a class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top"
+                        href="edit_vendor.php?id=<?php print_r($vendor["id"]) ?> " title="Edit"><i
+                            class="fa fa-edit"></i></a>
+                    <a class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top"
+                        href="utils.php?delete_vendor=true&id=<?php print_r($vendor["id"]) ?> " title="Delete"><i
+                            class="fa fa-trash"></i></button>
+
+                        <a class="btn btn-success" type="submit" name="id"
+                            href="buy_sell.php?vendors=true&id=<?php print_r($vendor["id"]) ?> ">Buy</a>
+
                 </td>
 
             </tr>
