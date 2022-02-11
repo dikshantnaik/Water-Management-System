@@ -5,8 +5,8 @@ include 'connection.php';
 include 'utils.php';
 
 if(isset($_GET['search'])){
-$sql = "Select * from vendor ,products
-        WHERE  products.product_id = vendor.product_id ,vendor_name LIKE \"%" .$_GET['search'] ."%\" 
+$sql = "Select * from vendor
+        WHERE vendor_name LIKE \"%" .$_GET['search'] ."%\" 
         OR vendor_phone LIKE \"%".$_GET['search']."%\"";
 }
 else{
@@ -15,6 +15,7 @@ $sql = "Select * from vendor,products WHERE  products.product_id = vendor.produc
 try {
     $vendors = $con->query($sql);
 } catch (Exception $th) {
+    error_log($sql);
     echo $th;
 }
 
@@ -43,6 +44,7 @@ include('includes/header.php');
 
             <input type="submit" value="Go" class="btn btn-primary">
         </form>
+
         <?php if(isset($_GET['search'])){ ?>
         <a class="btn btn-primary" href="vendors.php">Back</a>
         <?php } ?>
@@ -90,10 +92,10 @@ include('includes/header.php');
                             class="fa fa-edit"></i></a>
                     <a class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top"
                         href="utils.php?delete_vendor=true&id=<?php print_r($vendor["id"]) ?> " title="Delete"><i
-                            class="fa fa-trash"></i></button>
+                            class="fa fa-trash"></i></a>
 
-                        <a class="btn btn-success" type="submit" name="id"
-                            href="buy_sell.php?vendors=true&id=<?php print_r($vendor["id"]) ?> ">Buy</a>
+                    <a class="btn btn-success" type="submit" name="id"
+                        href="buy.php?vendors=true&id=<?php print_r($vendor["id"]) ?> ">Buy</a>
 
                 </td>
 

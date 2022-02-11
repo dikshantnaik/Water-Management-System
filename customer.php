@@ -77,12 +77,16 @@ include('includes/header.php');
                 <td style="text-align:center"><?php echo $customer["customer_phone"]?></td>
 
                 <td>
-                    <form action="edit_customer">
-                        <a class="btn btn-primary" type=" submit" name="id"
-                            href="edit_customer.php?id=<?php print_r($customer["customer_id"]) ?> ">Edit</a>
-                        <a class="btn btn-danger" type="submit" name="id"
-                            href="utils.php?delete_customer=true&id=<?php print_r($customer["customer_id"]) ?> ">Delete</a>
-                    </form>
+
+                    <a class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top"
+                        href="edit_customer.php?id=<?php print_r($customer["customer_id"]) ?> " title="Edit"><i
+                            class="fa fa-edit"></i></a>
+
+
+                    <a class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top"
+                        href="utils.php?delete_customer=true&id=<?php print_r($customer["customer_id"]) ?> "
+                        title="Delete"><i class="fa fa-trash"></i></a>
+                    <a class="btn btn-warning" href="sell.php?id= <?php print_r($customer["customer_id"]) ?>">Sell</a>
                 </td>
 
             </tr>

@@ -8,7 +8,7 @@ if(isset($_GET['buy'])){
         $sql1 = "UPDATE `products` SET `product_stock` = product_stock +" .$_GET['vendor_quantity'] . " WHERE `products`.`product_id` = " . $_GET['product_id'];
         $con->query($sql1);
         error_log($sql1);
-        $sql = "INSERT INTO orders VALUES (NULL,0,?,CURRENT_TIMESTAMP)";
+        $sql = "INSERT INTO orders VALUES (NULL,0,?,NULL,CURRENT_TIMESTAMP)";
         $stmt = $con->prepare($sql);
         $stmt->bind_param("s", $_GET['id']);
         $stmt->execute();
@@ -41,7 +41,7 @@ include_once('includes/header.php');
     <div class="container">
         <h2>Confirm Buy ?</h2>
         <hr>
-        <form class="form" action="buy_sell.php">
+        <form class="form" action="buy.php">
             <?php while($row = $result->fetch_assoc()) { ?>
             <div class="form-group">
                 <label class="control-label col-sm-2" for="email">Vendor Name:</label>
