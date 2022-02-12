@@ -77,9 +77,10 @@
                         <li><a href="index.php"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a></li>
                         <li><a href="vendors.php"><i class="fa fa-user fa-fw"></i> Vendors</a></li>
                         <li><a href="customer.php"><i class="fa fa-group fa-fw"></i> Customer</a></li>
-                        <li><a href="product.php"><i class="fa fa-group fa-fw"></i> Stock</a></li>
+                        <li><a href="product.php"><i class="fa fa-group fa-fw"></i> Products</a></li>
+                        <li><a href="orders.php"><i class="fa fa-group fa-fw"></i> Orders</a></li>
 
-                        <li><a href="admin_users.php"><i class="glyphicon glyphicon-cog fa-fw"></i> Admin Control</a>
+
                         </li>
                     </ul>
                 </div>

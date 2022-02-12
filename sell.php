@@ -3,51 +3,45 @@
  
     include('connection.php');
     include('utils.php');
-    
-if(isset($_GET['sell'])){
-    $product_id=  $_GET['product_id'];
-    $product_quantity = $_GET['product_quantity'];
-for ($i=0; $i < count($product_id); $i++) { 
-    if($product_quantity[$i]==null){
-        $_SESSION['failure'] = "entter Currecly";
-    }
-    else{$cool=true; }
-}if($cool){
-  $sql = "INSERT INTO orders VALUES (NULL,1,NULL,?,CURRENT_TIMESTAMP)";
+try{
+    if(isset($_GET['sell'])){
+        $product_id=  $_GET['product_id'];
+        $product_quantity = $_GET['product_quantity'];
+    for ($i=0; $i < count($product_id); $i++) { 
+        //Checking is quantity is not null
+        if($product_quantity[$i]==null){
+            $_SESSION['failure'] = "entter Currecly";
+        }
+        else{$cool=true; }
+        // If Quantity was't Null Cotinue
+    } if($cool){
+        //Creating an order id 
+    $sql = "INSERT INTO orders VALUES (NULL,1,NULL,?,0,CURRENT_TIMESTAMP)";
+            $stmt = $con->prepare($sql);
+            $stmt->bind_param("s", $_GET['id']);
+            $stmt->execute();
+
+            //Getting the last order id 
+            $order_id = $con->query("select * from orders order by order_id desc limit 1");
+            $order_id = $order_id->fetch_assoc();
+            $order_id=  $order_id["order_id"];
+    for ($i=0; $i < count($product_id); $i++) { 
+        //Insertign all the products
+        $sql = "INSERT INTO orders_product VALUES (NULL,?,?,?)";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("s", $_GET['id']);
+        $stmt->bind_param("sss",$order_id,$product_id[$i],$product_quantity[$i]);
         $stmt->execute();
-
         
-        $order_id = $con->query("select * from orders order by order_id desc limit 1");
-        $order_id = $order_id->fetch_assoc();
-        $order_id=  $order_id["order_id"];
-for ($i=0; $i < count($product_id); $i++) { 
-  
-    $sql = "INSERT INTO orders_product VALUES (NULL,?,?,?)";
-    $stmt = $con->prepare($sql);
-    $stmt->bind_param("sss",$order_id,$product_id[$i],$product_quantity[$i]);
-    $stmt->execute();
+        $sql1 = "UPDATE `products` SET `product_stock` = product_stock -" .$product_quantity[$i]  . " WHERE `products`.`product_id` = " . $product_id[$i];
+        $con->query($sql1);
+        }
+    }
     }
 }
-    // try{    
-    //     $sql = "UPDATE customer SET customer_name = ? , customer_phone = ?  WHERE customer_id = ".$_GET['id'];
-    //     $stmt = $con->prepare($sql);
-    //     $stmt->bind_param("si", $_GET['customer_name'], $_GET['customer_phone']);
-    //     $stmt->execute();
-        
-    //    $_SESSION['success'] = "Edited Success";
-	// 	header('Location:customer.php');
-        
-    // }
-    // catch(mysqli_sql_exception $err){
-    //     if(mysqli_errno($con)===1062){
-    //         alert_box("Phone no. Exists");
-    //     }
-    //     alert_box(mysqli_error($con));
-    // } 
-
-}
+catch(mysqli_sql_exception $err){
+  
+    alert_box(mysqli_error($con));
+} 
     
     $sql = "SELECT * from customer WHERE customer_id = ".$_GET['id'];
     $result = $con->query($sql);
@@ -86,13 +80,14 @@ include_once('includes/header.php');
     </div>
     <div class="form-group">
         <label class="control-label col-sm-2">Chose Product :</label>
-        <div class="col-sm-10">
+        <div class="container">
             <table class="table">
                 <thead>
                     <tr>
                         <th>#</th>
                         <th scope="col">Product</th>
                         <th scope="col">Price</th>
+                        <th scope="col">Stocks</th>
                         <th scope="col">Quantity</th>
                     </tr>
                 </thead>
@@ -108,6 +103,7 @@ include_once('includes/header.php');
                         </td>
                         <td> <?php echo $row2['product_category']."--". $row2['product_name']; ?></td>
                         <td><?php echo $row2['product_price'] ?></td>
+                        <td><?php echo $row2['product_stock'] ?></td>
                         <td><input type="number" name="product_quantity[]">
                         </td>
 
