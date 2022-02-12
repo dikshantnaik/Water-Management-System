@@ -1,6 +1,32 @@
 <?php
+session_start();
+include("connection.php");
 
-// Instantiate and use the dompdf class 
+$result = $con->query("SELECT
+    orders.order_id,
+    customer.customer_name,
+    customer.customer_phone,
+    products.product_name,
+    products.product_category,
+    orders_product.quantity,
+    products.product_price,
+    orders.date
+FROM
+    `orders_product`,
+    customer,
+    products,
+    orders
+WHERE
+    orders_product.order_id = orders.order_id AND 
+    products.product_id = orders_product.product_id AND
+     orders.customer_id = customer.customer_id AND
+      orders_product.order_id = ".$_GET["order_id"]);
+
+
+$rows = $result->fetch_assoc();
+$customer_Name = $rows['customer_name'];
+$customer_phone = $rows['customer_phone'];
+$order_date = $rows['date'];
 
 ?>
 <!DOCTYPE html>
@@ -24,7 +50,9 @@
                 <div id="invoice">
                     <div class="toolbar hidden-print">
                         <div class="text-end">
-                            <button type="button" class="btn btn-dark"><i class="fa fa-print"></i> Print</button>
+                            <button type="button" onclick="window.print()" class="btn btn-dark"><i
+                                    class="fa fa-print"></i>
+                                Print</button>
                             <button type="button" class="btn btn-danger"><i class="fa fa-file-pdf-o"></i> Export as
                                 PDF</button>
                         </div>
@@ -42,7 +70,7 @@
                                     <div class="col company-details">
                                         <h2 class="name">
                                             <a target="_blank" href="javascript:;">
-                                                Arboshiki
+                                                Aditya Sales
                                             </a>
                                         </h2>
                                         <div>455 Foggy Heights, AZ 85004, US</div>
@@ -55,61 +83,84 @@
                                 <div class="row contacts">
                                     <div class="col invoice-to">
                                         <div class="text-gray-light">INVOICE TO:</div>
-                                        <h2 class="to">John Doe</h2>
-                                        <div class="address">796 Silver Harbour, TX 79273, US</div>
-                                        <div class="email"><a href="mailto:john@example.com">john@example.com</a>
+                                        <h2 class="to"><?php echo $customer_Name?></h2>
+
+                                        <div class="email"><a style="color:black"
+                                                href="tel:+91 <?php echo $customer_phone?>">+91
+                                                <?php echo $customer_phone?></a>
                                         </div>
                                     </div>
-                                    <div class="col invoice-details">
-                                        <h1 class="invoice-id">INVOICE 3-2-1</h1>
-                                        <div class="date">Date of Invoice: 01/10/2018</div>
-                                        <div class="date">Due Date: 30/10/2018</div>
+                                    <div class=" col invoice-details">
+                                        <h1 class="invoice-id">Order No :<?php echo $_GET["order_id"]?> </h1>
+                                        <div class="date">Date of Invoice: <?php echo $order_date?></div>
+
                                     </div>
                                 </div>
                                 <table>
                                     <thead>
-                                        <tr>
+                                        <tr style="text-align:center">
                                             <th>#</th>
-                                            <th class="text-left">Product</th>
+                                            <th class="text-left">Product Name</th>
+                                            <th class="text-left">Category</th>
                                             <th class="text-right">Price</th>
                                             <th class="text-right">Quantity</th>
                                             <th class="text-right">TOTAL</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="no">01</td>
-                                            <td class="text-left">
+                                        <?php $total = 0; $Sr = 1;
+                                            while($row = $result->fetch_assoc()) { 
+                                            
+                                            $total_per_item = $row['product_price'] * $row['quantity'];
+                                            $total = $total+ $total_per_item;
+                                            ?>
+                                        <tr style="text-align:center">
+                                            <td class="no"><?php echo $Sr?></td>
+                                            <td class="text-left" style="text-align:center">
                                                 <h3>
                                                     <a target="_blank" href="javascript:;">
-                                                        Youtube channel
+                                                        <?php echo $row['product_name'] ?>
+                                                </h3>
+                                                </a>
+
+                                            <td style="text-align:center">
+                                                <h3>
+                                                    <a target="_blank" href="javascript:;">
+                                                        <?php echo $row['product_category'] ?>
                                                     </a>
                                                 </h3>
-
-                                            <td class="unit">$0.00</td>
-                                            <td class="qty">100</td>
-                                            <td class="total">$0.00</td>
+                                            <td class="unit text-center"><?php echo $row['product_price']?> ₹ </td>
+                                            <td class="qty text-center"><?php echo $row['quantity']?></td>
+                                            <td class="total text-left"><?php echo $total_per_item ?> ₹
+                                            </td>
                                         </tr>
-
+                                        <?php $Sr++; } ?>
                                     </tbody>
                                     <tfoot>
+
                                         <tr>
+                                            <td></td>
                                             <td colspan="2"></td>
                                             <td colspan="2">SUBTOTAL</td>
-                                            <td>$5,200.00</td>
+                                            <td> <?php echo $total; $tax = $total * 0.05 // 5% of total ?></td>
                                         </tr>
                                         <tr>
+                                            <td></td>
                                             <td colspan="2"></td>
-                                            <td colspan="2">TAX 25%</td>
-                                            <td>$1,300.00</td>
+                                            <td colspan="2">TAX 5%</td>
+                                            <td><?php echo $tax; ?></td>
                                         </tr>
                                         <tr>
+                                            <td></td>
                                             <td colspan="2"></td>
                                             <td colspan="2">GRAND TOTAL</td>
-                                            <td>$6,500.00</td>
+                                            <td><?php echo $total+$tax ;?></td>
                                         </tr>
+
                                     </tfoot>
                                 </table>
+                                <div class="d-flex "><span style="text-align:center">Payament Status
+                                        :Pending</span></div>
                                 <div class="thanks">Thank you!</div>
 
                             </main>
@@ -124,8 +175,6 @@
         </div>
     </div>
 </body>
-<style>
-
-</style>
+<script></script>
 
 </html>

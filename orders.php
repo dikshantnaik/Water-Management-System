@@ -109,7 +109,7 @@ include('includes/header.php');
                 <td style="text-align:center"><?php echo $customer["product_quantity"]?></td>
                 <td style="text-align:center">
                     <?php 
-                        if($customer['payment_status']=="1"){ 
+                        if($customer['payment_status']=="paid"){ 
                             echo '<span class="badge badge-success" style="background-color:green">Paid</span>'; 
                             } else echo '<span class="badge badge-primary " style="background-color:#ffc107 ">Pending</span>'?>
 
@@ -128,7 +128,7 @@ include('includes/header.php');
                     <a class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top"
                         href="utils.php?delete_customer=true&id=<?php print_r($customer["customer_id"]) ?> "
                         title="Delete"><i class="fa fa-trash"></i></a>
-                    <a class="btn btn-warning" href="sell.php?id= <?php print_r($customer["customer_id"]) ?>">BILL</a>
+                    <a class="btn btn-warning" href="bill.php?order_id= <?php echo($customer["order_id"]) ?>">BILL</a>
                 </td>
 
             </tr>
