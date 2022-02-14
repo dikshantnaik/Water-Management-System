@@ -10,7 +10,9 @@ Register($_POST['username'],$_POST['password'],$_POST['email']);
 if(isset($_POST['login'])) {
     if(Login($_POST['username'],$_POST['password'])=="logedin"){
         $_SESSION['success'] = "Loged IN";
+        $_SESSION['user_logged_in'] = "True";
         header('Location:index.php');
+        
     }
     else{
         $_SESSION['failure'] = "Wrong Credential";
@@ -94,11 +96,11 @@ if (isset($_GET['register'])){
                         <label class="control-label">Password</label>
                         <input type="password" name="password" class="form-control" required="required">
                     </div>
-                    <div class="checkbox">
+                    <!-- <div class="checkbox">
                         <label>
                             <input name="remember" type="checkbox" value="1">Remember Me
                         </label>
-                    </div>
+                    </div> -->
 
                     <button type="submit" name="login" value="login" class="btn btn-success loginField">Login</button>
                 </div>

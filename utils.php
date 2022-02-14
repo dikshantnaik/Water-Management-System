@@ -19,6 +19,19 @@ function getVendorCount() {
     $rows= mysqli_num_rows($vendors);
     return $rows;
 }
+function getCustomerCount() {
+    include "connection.php";
+    $sql2 = "SELECT * FROM customer";
+    $customer2 = $con->query($sql2);
+    $rows2= mysqli_num_rows($customer2);
+    return $rows2;
+}function getProductCount() {
+    include "connection.php";
+    $sql3 = "SELECT * FROM products";
+    $product3 = $con->query($sql3);
+    $rows3= mysqli_num_rows($product3);
+    return $rows3;
+}
 function Register(string $username1,string $pasword,string $email){
 	include 'connection.php';
 	$pasword = password_hash($pasword,PASSWORD_DEFAULT);

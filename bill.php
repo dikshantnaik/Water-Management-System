@@ -22,11 +22,12 @@ WHERE
      orders.customer_id = customer.customer_id AND
       orders_product.order_id = ".$_GET["order_id"]);
 
-
+// $result2 = $result;
 $rows = $result->fetch_assoc();
 $customer_Name = $rows['customer_name'];
 $customer_phone = $rows['customer_phone'];
 $order_date = $rows['date'];
+mysqli_data_seek($result,0);
 
 ?>
 <!DOCTYPE html>

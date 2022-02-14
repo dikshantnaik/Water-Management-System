@@ -4,6 +4,7 @@ session_start();
 include 'includes/flash_messages.php';
 include_once('includes/header.php');
 include 'utils.php';
+include 'includes/auth_validate.php'
 ?>
 <div id="page-wrapper">
     <?php include 'includes/flash_messages.php'?>
@@ -31,7 +32,7 @@ include 'utils.php';
                         </div>
                     </div>
                 </div>
-                <a href="vendors/vendors.php">
+                <a href="vendors.php">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -48,12 +49,14 @@ include 'utils.php';
                             <i class="fa fa-group fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo 20?></div>
+                            <div class="huge"><?php 
+                            echo getCustomerCount();
+                            ?></div>
                             <div>Customers</div>
                         </div>
                     </div>
                 </div>
-                <a href="customers.php">
+                <a href="customer.php">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -70,12 +73,14 @@ include 'utils.php';
                             <i class="fa fa-group fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge"><?php echo 20?></div>
-                            <div>Stocks</div>
+                            <div class="huge"><?php 
+                            echo getProductCount();
+                            ?></div>
+                            <div>Products</div>
                         </div>
                     </div>
                 </div>
-                <a href="customers.php">
+                <a href="product.php">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>

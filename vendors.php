@@ -3,6 +3,8 @@ session_start();
 
 include 'connection.php';
 include 'utils.php';
+include 'includes/auth_validate.php';
+
 
 if(isset($_GET['search'])){
 $sql = "Select * from vendor

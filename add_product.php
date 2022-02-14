@@ -2,6 +2,8 @@
 session_start();
 include('connection.php');
 include('utils.php');
+include 'includes/auth_validate.php';
+
  if(isset($_GET['add_product'])){
     
     try{    

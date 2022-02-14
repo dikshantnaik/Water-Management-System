@@ -2,6 +2,8 @@
  session_start();
     include('connection.php');
     include('utils.php');
+include 'includes/auth_validate.php';
+
 if(isset($_GET['edit_product'])){
     error_log("helo");
     try{    
@@ -23,7 +25,7 @@ if(isset($_GET['edit_product'])){
 
 }
     
-    $sql = "SELECT* from products WHERE product_id = ".$_GET['id'];
+    $sql = "SELECT * from products WHERE product_id = ".$_GET['id'];
     $result = $con->query($sql);
     
 include_once('includes/header.php'); 
@@ -39,35 +41,34 @@ include_once('includes/header.php');
         <form class="form" action="edit_product.php">
             <?php while($row = $result->fetch_assoc()) { ?>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="email">product Name:</label>
+                <label class="control-label col-sm-2" for="email">Product Name:</label>
                 <div class="col-sm-10">
                     <input style="width:40%" type="text" value="<?php echo $row['product_name'] ?>" class="form-control"
                         placeholder="product Name" name="product_name">
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd">Contact :</label>
+                <label class="control-label col-sm-2" for="email">Product Category:</label>
                 <div class="col-sm-10">
-                    <input style="width:40%" type="number" value="<?php echo $row['product_phone'] ?>"
-                        class="form-control" placeholder="Contact" name="product_phone">
+                    <input style="width:40%" type="text" value="<?php echo $row['product_category'] ?>"
+                        class="form-control" placeholder="product Name" name="product_category">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Product Price:</label>
+                <div class="col-sm-10">
+                    <input style="width:40%" type="number" value="<?php echo $row['product_price'] ?>"
+                        class="form-control" placeholder="product Name" name="product_price">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="email">Product Stock:</label>
+                <div class="col-sm-10">
+                    <input style="width:40%" type="text" value="<?php echo $row['product_stock'] ?>"
+                        class="form-control" placeholder="product Name" name="product_stock">
                 </div>
             </div>
 
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd">Contact :</label>
-                <div class="col-sm-10">
-                    <input style="width:40%" type="number" value="<?php echo $row['product_phone'] ?>"
-                        class="form-control" placeholder="Contact" name="product_phone">
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2" for="pwd">Contact :</label>
-                <div class="col-sm-10">
-                    <input style="width:40%" type="number" value="<?php echo $row['product_phone'] ?>"
-                        class="form-control" placeholder="Contact" name="product_phone">
-                </div>
-            </div>
 
 
     </div>
