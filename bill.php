@@ -10,7 +10,8 @@ $result = $con->query("SELECT
     products.product_category,
     orders_product.quantity,
     products.product_price,
-    orders.date
+    orders.date,
+    orders.payment_status
 FROM
     `orders_product`,
     customer,
@@ -26,6 +27,7 @@ WHERE
 $rows = $result->fetch_assoc();
 $customer_Name = $rows['customer_name'];
 $customer_phone = $rows['customer_phone'];
+$payment_status = $rows['payment_status'];
 $order_date = $rows['date'];
 mysqli_data_seek($result,0);
 
@@ -160,8 +162,8 @@ mysqli_data_seek($result,0);
 
                                     </tfoot>
                                 </table>
-                                <div class="d-flex "><span style="text-align:center">Payament Status
-                                        :Pending</span></div>
+                                <div class="d-flex "><span style="text-align:center">Payament Status :
+                                        <?php echo $payment_status?></span></div>
                                 <div class="thanks">Thank you!</div>
 
                             </main>
