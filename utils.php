@@ -110,4 +110,22 @@ function Login(string $username1,string $password1){
 		$_SESSION['success'] = "Deleted Sucess";
 		header('Location:customer.php');
 	}
+    if(isset($_GET['payment_status'])){
+        $con->query('UPDATE orders SET payment_status="'.$_GET['payment_status'].'" WHERE order_id = '.$_GET['order_id']);
+        $con->close;
+        $_SESSION['success'] = "Payment Status Updated ";
+        header('Location:orders.php');
+        
+    }
+if(isset($_GET['delete_order'])){
+    
+        $con->query("DELETE FROM `orders_product` WHERE order_id = ".$_GET['id']);
+        $con->query("DELETE FROM orders WHERE order_id = ".$_GET['id']);
+        $con->close;
+        $_SESSION['success'] = "Deleted Success ";
+        header('Location:orders.php');
+        
+    }
+    
+    
 ?>

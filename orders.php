@@ -34,7 +34,8 @@ $sql = " SELECT
     customer.customer_phone AS customer_phone,
     orders.payment_status AS payment_status,
     customer.customer_id AS customer_id,
-    orders.date AS date
+    orders.date AS date,
+    orders.total
 FROM
     `orders_product`,
     customer,
@@ -80,7 +81,7 @@ include('includes/header.php');
             <input type="submit" value="Go" class="btn btn-primary">
         </form>
         <?php if(isset($_GET['search'])){ ?>
-        <a class="btn btn-primary" href="customer.php">Back</a>
+        <a class="btn btn-primary" href="orders.php">Back</a>
         <?php } ?>
         <a href="add_customer.php" class="btn btn-success" style="float: right;">
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus"
@@ -104,6 +105,7 @@ include('includes/header.php');
 
                 <th style="text-align:center" width="15%">Payment Status </th>
                 <th style="text-align:center" width="15%">Date</th>
+                <th style="text-align:center" width="15%">Total </th>
                 <th style="text-align:center" width="15%">Actions</th>
             </tr>
         </thead>
@@ -120,14 +122,15 @@ include('includes/header.php');
                 <td style="text-align:center">
                     <?php 
                         if($customer['payment_status']=="paid"){ 
-                            echo '<span class="badge badge-success" style="background-color:green">Paid</span>'; 
-                            } else echo '<span class="badge badge-primary " style="background-color:#ffc107 ">Pending</span>'?>
+                            echo '<a href="utils.php?payment_status=pending&order_id='.$customer["order_id"].'"> <span class="badge badge-success" style="background-color:green">Paid</span></a> '; 
+                            } else echo '<a href="utils.php?payment_status=paid&order_id='.$customer["order_id"].'"> <span class="badge badge-primary " style="background-color:#ffc107 ">Pending</span> </a>'?>
 
 
 
 
                 </td>
                 <td style="text-align:center"><?php echo $customer["date"]?></td>
+                <td style="text-align:center"><?php echo $customer["total"]?></td>
                 <td>
 
                     <a class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top"
@@ -142,9 +145,8 @@ include('includes/header.php');
                     </a>
                     <i class="bi bi-whatsapp"></i>
                     <a class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top"
-                        target="_blank"
-                        href="utils.php?delete_customer=true&id=<?php print_r($customer["customer_id"]) ?> "
-                        title="Delete"><i class="fa fa-trash"></i></a>
+                        href="utils.php?delete_order=true&id=<?php print_r($customer["order_id"]) ?> " title="Delete"><i
+                            class="fa fa-trash"></i></a>
                     <a class="btn btn-warning" href="bill.php?order_id=<?php echo($customer["order_id"]) ?>">BILL</a>
                 </td>
 

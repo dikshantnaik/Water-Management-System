@@ -16,43 +16,64 @@ try{
     //     else{$cool=true; }
     //     // If Quantity was't Null Cotinue
     // } 
-    $cool = true;
-    if($cool){
+    
+    // $cool = true;
+    // if($cool){
         //Creating an order id 
-    $sql = "INSERT INTO orders VALUES (NULL,1,NULL,?,0,CURRENT_TIMESTAMP)";
+    $sql = "INSERT INTO orders VALUES (NULL,1,NULL,?,0,?,CURRENT_TIMESTAMP)";
             $stmt = $con->prepare($sql);
-            $stmt->bind_param("s", $_GET['id']);
+            $stmt->bind_param("ss", $_GET['id'],$_GET['payment_status2']);
             $stmt->execute();
 
             //Getting the last order id 
             $order_id = $con->query("select * from orders order by order_id desc limit 1");
             $order_id = $order_id->fetch_assoc();
             $order_id=  $order_id["order_id"];
-    for ($i=0; $i < count($product_id); $i++) { 
-        // $price_row = $con->query("Select product_price FROM products WHERE products_id = ".$product_id);
-        // $product_price = $price_row->fetch_assoc();
-        // $product_price = $product_price['product_price'];
-        
-        if($product_quantity[$i]!=null && $product_id[$i]){
+            $total = 0;$subtotal=0;
+
+    $flag = 0;
+    for ($i=0; $i <= count($product_quantity); $i++) { 
+        //Calculatiing the total price
+         if($product_quantity[$i]!=null){
+        $price_row = $con->query("Select product_price FROM products WHERE product_id = ".$product_id[$flag]);
+        $product_price = $price_row->fetch_assoc();
+        $product_price = $product_price['product_price'];
+        $subtotal = (int)$product_price * (int)$product_quantity[$i];
+        $total = $subtotal + $total;
+        // if($product_quantity[$i]!=null && $product_id[$i]!=null){
         //Insertign all the products
+        error_log($product_quantity[$i]);
         $sql = "INSERT INTO orders_product VALUES (NULL,?,?,?)";
         $stmt = $con->prepare($sql);
-        $stmt->bind_param("sss",$order_id,$product_id[$i],$product_quantity[$i]);
+        $stmt->bind_param("sss",$order_id,$product_id[$flag],$product_quantity[$i]);
         $stmt->execute();
         
-        $sql1 = "UPDATE `products` SET `product_stock` = product_stock -" .$product_quantity[$i]  . " WHERE `products`.`product_id` = " . $product_id[$i];
+        $sql1 = "UPDATE `products` SET `product_stock` = product_stock -" .$product_quantity[$i]  . " WHERE `products`.`product_id` = " . $product_id[$flag];
         $con->query($sql1);
-        }
-        header('Location:bill.php?order_id='.$order_id);
+        $flag++;
     }
-    }
+        
+            $con->query("UPDATE orders SET total = ".$total." WHERE order_id = ".$order_id);
+            
+    header('Location:bill.php?order_id='.$order_id);
+}
     }
     
 }
 catch(mysqli_sql_exception $err){
-  
+    
+    if(mysqli_errno($con)==4025){
+        alert_box("Out of Stocks");
+    }
+    // elseif(mysqli_errno($con)==1366){
+    //     alert_box("Please Enter Correctly ");
+    // }
+    else{
+        // error_log($stmt->fullQuery());
+
     alert_box(mysqli_error($con));
-} 
+    alert_box(mysqli_errno($con));
+} }
     
     $sql = "SELECT * from customer WHERE customer_id = ".$_GET['id'];
     $result = $con->query($sql);
@@ -69,7 +90,7 @@ include_once('includes/header.php');
 <section id="page-wrapper">
     <?php include 'includes/flash_messages.php'?>
     <div class="container">
-        <h2>Sell Prodocut</h2>
+        <h2>Sell Product</h2>
         <hr>
         <form class="form" action="sell.php">
             <?php while($row = $result->fetch_assoc()) { ?>
@@ -79,18 +100,30 @@ include_once('includes/header.php');
                 <?php echo $row['customer_name'] ?>
                 <!-- </div> -->
             </div>
-            <div class=" form-group">
+            <div class=" form-group" style="margin-bottom:0;">
                 <label class="control-label col-sm-2" for="pwd">Contact :</label>
-                <div class="col-sm-10">
-                    <?php echo $row['customer_phone'] ?>
+                <!-- <div class="col-sm-10"> -->
+                <?php echo $row['customer_phone'] ?>
 
-                </div>
+                <!-- </div> -->
+
+            </div>
+            <div class=" form-group ">
+                <br><label class="control-label col-sm-2" for="pwd">Payment Status :</label>
+                <input class="form-check-input" type="radio" name="payment_status2" value="pending"
+                    id="flexRadioDefault2" checked>
+                Pending
+                <input class="form-check-input" type="radio" name="payment_status2" value="paid" id="flexRadioDefault2">
+                Paid
+
 
             </div>
 
     </div>
+
+
     <div class="form-group">
-        <label class="control-label col-sm-2">Chose Product :</label>
+        <label class="control-label col-sm-2"> Chose Product :</label>
         <div class="container">
             <table class="table">
                 <thead>
@@ -115,7 +148,7 @@ include_once('includes/header.php');
                         <td> <?php echo  $row2['product_name'] ."--". $row2['product_category'] ?></td>
                         <td><?php echo $row2['product_price'] ?></td>
                         <td><?php echo $row2['product_stock'] ?></td>
-                        <td><input type="number" name="product_quantity[]">
+                        <td><input type="text" name="product_quantity[]">
                         </td>
 
                     </tr>
