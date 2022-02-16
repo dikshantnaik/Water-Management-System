@@ -8,7 +8,8 @@ if(isset($_GET['buy'])){
         $sql1 = "UPDATE `products` SET `product_stock` = product_stock +" .$_GET['vendor_quantity'] . " WHERE `products`.`product_id` = " . $_GET['product_id'];
         $con->query($sql1);
         error_log($sql1);
-        $sql = "INSERT INTO orders VALUES (NULL,0,?,NULL,CURRENT_TIMESTAMP)";
+        // $total = $_GET['vendor_quantity'] * $_GET['vendor']
+        $sql = "INSERT INTO orders VALUES (NULL,0,?,NULL,0,'pending',CURRENT_TIMESTAMP)";
         $stmt = $con->prepare($sql);
         $stmt->bind_param("s", $_GET['id']);
         $stmt->execute();
