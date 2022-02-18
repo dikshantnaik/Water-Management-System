@@ -11,6 +11,13 @@ function alert_box($msg)
   echo "<script>alert(\"".$msg."\")</script>";
 
 }
+function redirect($url){
+    // echo "<script>window.location.href='".$url."';</script>";
+    echo '<script type="text/javascript">
+           window.location = "'.$url.'"
+      </script>';
+    // exit;
+}
 
 function getVendorCount() {
     include "connection.php";
@@ -101,20 +108,20 @@ function Login(string $username1,string $password1){
 		$con->query($sql);
 		$con->close;
 		$_SESSION['success'] = "Deleted Sucess";
-		header('Location:vendors.php');
+        redirect('vendors.php');
 	}
   if(isset($_GET['delete_customer'])){
 		$sql = "DELETE FROM customer WHERE customer_id= " .$_GET['id'];
 		$con->query($sql);
 		$con->close;
 		$_SESSION['success'] = "Deleted Sucess";
-		header('Location:customer.php');
+        redirect('customer.php');
 	}
     if(isset($_GET['payment_status'])){
         $con->query('UPDATE orders SET payment_status="'.$_GET['payment_status'].'" WHERE order_id = '.$_GET['order_id']);
         $con->close;
         $_SESSION['success'] = "Payment Status Updated ";
-        header('Location:orders.php');
+        redirect('orders.php');
         
     }
 if(isset($_GET['delete_order'])){
@@ -123,7 +130,7 @@ if(isset($_GET['delete_order'])){
         $con->query("DELETE FROM orders WHERE order_id = ".$_GET['id']);
         $con->close;
         $_SESSION['success'] = "Deleted Success ";
-        header('Location:orders.php');
+        redirect('orders.php');
         
     }
     

@@ -15,7 +15,7 @@ include 'includes/auth_validate.php';
         // alert_box("Vendors Data Added");
         // header('Location:vendors.php');
        $_SESSION['success'] = "Added Success";
-		header('Location:vendors.php');
+        redirect("vendors.php");
         
     }
     catch(mysqli_sql_exception $err){

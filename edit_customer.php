@@ -13,7 +13,7 @@ if(isset($_GET['edit_customer'])){
         $stmt->execute();
         
        $_SESSION['success'] = "Edited Success";
-		header('Location:customer.php');
+        redirect("customer.php");
         
     }
     catch(mysqli_sql_exception $err){

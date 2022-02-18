@@ -14,10 +14,8 @@ if(isset($_GET['edit_vendor'])){
                                    $_GET['vendor_quantity'],$_GET['vendor_price']);
         $stmt->execute();
         
-        // alert_box("Vendors Data Added");
-        // header('Location:vendors.php');
        $_SESSION['success'] = "Edited Success";
-		header('Location:vendors.php');
+        redirect("vendors.php");
         
     }
     catch(mysqli_sql_exception $err){

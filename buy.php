@@ -17,7 +17,8 @@ if(isset($_GET['buy'])){
         // alert_box("Vendors Data Added");
         // header('Location:vendors.php');
        $_SESSION['success'] = "Edited Success";
-		header('Location:vendors.php');
+		// header('Location:vendors.php');
+        redirect("vendors.php");
         
     }
     catch(mysqli_sql_exception $err){

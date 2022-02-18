@@ -11,9 +11,9 @@ include 'includes/auth_validate.php';
         $stmt->bind_param("ss", $_GET['customer_name'], $_GET['customer_phone']);
         $stmt->execute();
         // alert_box("Vendors Data Added");
-        // header('Location:vendors.php');
        $_SESSION['success'] = "Added Success";
-		header('Location:customer.php');
+        redirect('customer.php');
+        exit;
         
     }
     catch(mysqli_sql_exception $err){

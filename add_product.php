@@ -11,10 +11,8 @@ include 'includes/auth_validate.php';
         $stmt = $con->prepare($sql);
         $stmt->bind_param("ssss", $_GET['product_category'], $_GET['product_name'], $_GET['product_price'], $_GET['product_stock']);
         $stmt->execute();
-        // alert_box("Vendors Data Added");
-        // header('Location:vendors.php');
        $_SESSION['success'] = "Added Success";
-		header('Location:product.php');
+        redirect("products.php");
         
     }
     catch(mysqli_sql_exception $err){
@@ -42,7 +40,7 @@ include_once('includes/header.php');
 </style>
 <section id="page-wrapper">
     <div class="container">
-        <h2>Add Vendor Details </h2>
+        <h2>Add Products Details </h2>
         <hr>
         <form class="form" action="add_product.php">
             <div class="form-group">

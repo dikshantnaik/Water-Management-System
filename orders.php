@@ -4,7 +4,7 @@ session_start();
 include 'connection.php';
 include 'utils.php';
 include 'includes/auth_validate.php';
-$Server_url = "192.168.0.1:3000/bill.php?order_id=";
+$Server_url = $_SERVER['SERVER_NAME']."/bill.php?order_id=";
 $msg = "Hello your Order has been Recorded \nPlease check the link to check the bill here \n".$Server_url;
 if(isset($_GET['search'])){
 $sql = " SELECT
@@ -73,17 +73,18 @@ include('includes/header.php');
     <!-- Filters -->
     <div class="well text-center filter-form ce">
 
-        <form class="form form-inline" action="">
-            <label for="input_search">Search</label>
-            <input type="text" class="form-control" id="input_search" name="search" placeholder="Name/Order ID"
-                value="<?php if(isset($_GET['search_str'])) echo $search_data?>">
 
-            <input type="submit" value="Go" class="btn btn-primary">
+        <form class="form form-inline" style="display:flex " action="">
+            <label for="input_search" style="margin-top:5px">Search</label>
+            <input type="text" class="form-control" style="margin-left:5px" id="input_search" name="search"
+                placeholder="Name/Order ID" value="<?php if(isset($_GET['search_str'])) echo $search_data?>">
+
+            <input type="submit" style="margin-left:5px" value="Go" class="btn btn-primary">
         </form>
         <?php if(isset($_GET['search'])){ ?>
         <a class="btn btn-primary" href="orders.php">Back</a>
         <?php } ?>
-        <a href="add_customer.php" class="btn btn-success" style="float: right;">
+        <!-- <a href="add_customer.php" class="btn btn-success" style="float: right;">
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-plus"
                 viewBox="0 0 16 16">
                 <path
@@ -91,7 +92,7 @@ include('includes/header.php');
                 </path>
             </svg>
             <h4>Add Customer</h4>
-        </a>
+        </a> -->
     </div>
     <hr>
     <!-- //Filters -->

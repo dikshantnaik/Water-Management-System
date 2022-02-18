@@ -11,7 +11,7 @@ if(isset($_POST['login'])) {
     if(Login($_POST['username'],$_POST['password'])=="logedin"){
         $_SESSION['success'] = "Loged IN";
         $_SESSION['user_logged_in'] = "True";
-        header('Location:index.php');
+        redirect('index.php');
         
     }
     else{

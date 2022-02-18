@@ -55,7 +55,7 @@ try{
         
             $con->query("UPDATE orders SET total = ".$total." WHERE order_id = ".$order_id);
             
-    header('Location:bill.php?order_id='.$order_id);
+    redirect("bill.php?order_id=".$order_id);
 }
     }
     
